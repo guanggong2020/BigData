@@ -9,7 +9,7 @@ import re
 # ----------------------数据库连接
 myconn = pymongo.MongoClient('mongodb://localhost:27017')
 mydb = myconn['keshe']
-mycol = mydb['test1'] # test:深圳
+mycol = mydb['test']
 
 
 # ----------------------user-agent
@@ -25,7 +25,7 @@ User_Agent = [
               'Mozilla/5.0 (Windows; U; Windows NT 6.1; ) AppleWebKit/534.12 (KHTML, like Gecko) Maxthon/3.0 Safari/534.12'
   ]
 
-def get_price_code(url='http://quote.eastmoney.com/stock_list.html'):
+def get_price_code(url):
     # 补全请求头
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
@@ -63,28 +63,19 @@ def mongo_insert(list):
     mycol.insert_many(list)
     print('save done')
 
-def main():
-    list = get_price_code()
+def main(url):
+    list = get_price_code(url)
     mongo_insert(list)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 
 
 
 
 
 # ------------------------------------------
-# url =
-# res = requests.get(url=url, headers=headers, timeout=10)
-# res.encoding = 'utf8'
-# html = res.text
-# pageHTML = etree.HTML(html)
-#
-# urls_list = pageHTML.xpath('//div[@class="thumbnail-preview"]/span/a/@href')
-# # 根据标签中的文本内容搜索标签
-# item['id'] = response.xpath("//li[contains(text(),'Id:')]/text()")[0].extract().split(':')[1].strip()
-#
+
 # # 获取股票代码
 # http://quote.eastmoney.com/stock_list.html
 # # 历史数据下载
